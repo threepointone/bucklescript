@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *)
+*)
 
 (* Author: Hongbo Zhang  *)
 
-(** Utilities for compiling lambda record into JS IR *)
-
-val make : J.mutable_flag -> (string * J.expression) list -> J.expression
-
-val field : J.expression -> J.jsint ->J.expression
+val js_array_ctor : string 
+val js_type_number : string
+val js_type_string : string
+val js_type_object : string
+val js_undefined : string
+val js_prop_length : string

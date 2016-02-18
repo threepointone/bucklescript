@@ -10,6 +10,8 @@ mt.cmi :
 test_for_map2.cmi :
 test_is_js.cmi :
 ui_defs.cmi :
+Mt_mock.cmo : ../stdlib/list.cmi ../lib/js.cmi
+Mt_mock.cmx : ../stdlib/list.cmx ../lib/js.cmx
 a.cmo : test_order.cmo ../stdlib/string.cmi ../stdlib/set.cmi \
     ../stdlib/list.cmi
 a.cmx : test_order.cmx ../stdlib/string.cmx ../stdlib/set.cmx \
@@ -82,6 +84,8 @@ equal_exception_test.cmo : ../stdlib/string.cmi mt.cmi ../stdlib/bytes.cmi
 equal_exception_test.cmx : ../stdlib/string.cmx mt.cmx ../stdlib/bytes.cmx
 equal_test.cmo :
 equal_test.cmx :
+es6_module_test.cmo : mt.cmi ../stdlib/list.cmi
+es6_module_test.cmx : mt.cmx ../stdlib/list.cmx
 ext_bytes.cmo : ../stdlib/bytes.cmi
 ext_bytes.cmx : ../stdlib/bytes.cmx
 ext_filename.cmo : ../stdlib/sys.cmi ../stdlib/string.cmi ../stdlib/list.cmi \
@@ -96,6 +100,8 @@ extensible_variant_test.cmo : mt.cmi
 extensible_variant_test.cmx : mt.cmx
 fib.cmo :
 fib.cmx :
+float_test.cmo : mt.cmi ../stdlib/int64.cmi
+float_test.cmx : mt.cmx ../stdlib/int64.cmx
 for_loop_test.cmo : mt.cmi ../stdlib/list.cmi ../stdlib/array.cmi
 for_loop_test.cmx : mt.cmx ../stdlib/list.cmx ../stdlib/array.cmx
 for_side_effect_test.cmo : mt.cmi
@@ -128,6 +134,10 @@ inline_regression_test.cmx : ../stdlib/string.cmx mt.cmx \
     ../stdlib/filename.cmx
 int_map.cmo : ../stdlib/map.cmi
 int_map.cmx : ../stdlib/map.cmx
+int_overflow_test.cmo : ../stdlib/string.cmi mt.cmi ../stdlib/int32.cmi \
+    ../stdlib/char.cmi
+int_overflow_test.cmx : ../stdlib/string.cmx mt.cmx ../stdlib/int32.cmx \
+    ../stdlib/char.cmx
 js_obj_test.cmo : mt.cmi
 js_obj_test.cmx : mt.cmx
 lazy_test.cmo : mt.cmi ../stdlib/lazy.cmi
@@ -400,6 +410,8 @@ typeof_test.cmo : mt.cmi ../lib/js.cmi
 typeof_test.cmx : mt.cmx ../lib/js.cmx
 unitest_string.cmo :
 unitest_string.cmx :
+Mt_mock.cmo : ../stdlib/list.cmi ../lib/js.cmi
+Mt_mock.cmj : ../stdlib/list.cmj ../lib/js.cmj
 a.cmo : test_order.cmo ../stdlib/string.cmi ../stdlib/set.cmi \
     ../stdlib/list.cmi
 a.cmj : test_order.cmj ../stdlib/string.cmj ../stdlib/set.cmj \
@@ -472,6 +484,8 @@ equal_exception_test.cmo : ../stdlib/string.cmi mt.cmi ../stdlib/bytes.cmi
 equal_exception_test.cmj : ../stdlib/string.cmj mt.cmj ../stdlib/bytes.cmj
 equal_test.cmo :
 equal_test.cmj :
+es6_module_test.cmo : mt.cmi ../stdlib/list.cmi
+es6_module_test.cmj : mt.cmj ../stdlib/list.cmj
 ext_bytes.cmo : ../stdlib/bytes.cmi
 ext_bytes.cmj : ../stdlib/bytes.cmj
 ext_filename.cmo : ../stdlib/sys.cmi ../stdlib/string.cmi ../stdlib/list.cmi \
@@ -486,6 +500,8 @@ extensible_variant_test.cmo : mt.cmi
 extensible_variant_test.cmj : mt.cmj
 fib.cmo :
 fib.cmj :
+float_test.cmo : mt.cmi ../stdlib/int64.cmi
+float_test.cmj : mt.cmj ../stdlib/int64.cmj
 for_loop_test.cmo : mt.cmi ../stdlib/list.cmi ../stdlib/array.cmi
 for_loop_test.cmj : mt.cmj ../stdlib/list.cmj ../stdlib/array.cmj
 for_side_effect_test.cmo : mt.cmi
@@ -518,6 +534,10 @@ inline_regression_test.cmj : ../stdlib/string.cmj mt.cmj \
     ../stdlib/filename.cmj
 int_map.cmo : ../stdlib/map.cmi
 int_map.cmj : ../stdlib/map.cmj
+int_overflow_test.cmo : ../stdlib/string.cmi mt.cmi ../stdlib/int32.cmi \
+    ../stdlib/char.cmi
+int_overflow_test.cmj : ../stdlib/string.cmj mt.cmj ../stdlib/int32.cmj \
+    ../stdlib/char.cmj
 js_obj_test.cmo : mt.cmi
 js_obj_test.cmj : mt.cmj
 lazy_test.cmo : mt.cmi ../stdlib/lazy.cmi

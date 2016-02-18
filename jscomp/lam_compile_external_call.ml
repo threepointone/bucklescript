@@ -212,7 +212,7 @@ let ocaml_to_js last (js_splice : bool) ((label : string), (ty : Types.type_expr
     | { desc = Tconstr(p,_,_) }, _ when Path.same p Predef.path_bool -> 
       begin 
         match arg.expression_desc with 
-        | Number (Int {i = 0; _} 
+        | Number (Int {i = 0l; _} 
         (* | Float {f = "0."} This should not happen *)
        ) ->  [E.false_]
         | Number _ -> [E.true_]
@@ -236,7 +236,7 @@ let ocaml_to_js last (js_splice : bool) ((label : string), (ty : Types.type_expr
 
           [E.econd arg
              E.undefined
-             (E.index arg 1)]
+             (E.index arg 1l)]
       end
     | _ ->  [arg]  
           
@@ -259,7 +259,7 @@ let translate
                 | Tconstr(p,_,_), `Label label  when Path.same p Predef.path_bool -> 
                   begin 
                     match arg.expression_desc with 
-                    | Number ((* Float { f = "0."}| *) Int { i = 0;_}) ->  Some (Js_op.Key label ,E.false_)
+                    | Number ((* Float { f = "0."}| *) Int { i = 0l;_}) ->  Some (Js_op.Key label ,E.false_)
                     | Number _ -> Some (Js_op.Key label,E.true_)
                     | _ -> Some (Js_op.Key label, (E.econd arg E.true_ E.false_))
                   end
@@ -281,7 +281,7 @@ let translate
                                (* (E.bin EqEqEq (E.typeof arg) *)
                                (*   (E.str "number")) *)
                                E.undefined
-                               (E.index arg 1))
+                               (E.index arg 1l))
                   end)                   
               arg_types args 
               (* (Ext_list.exclude_tail arg_types) (Ext_list.exclude_tail args) *)

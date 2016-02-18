@@ -48,19 +48,19 @@ let query (prim : Lam_compile_env.primitive_description)
           "minor_words" , zero_float_lit;
           "promoted_words", zero_float_lit;
           "major_words", zero_float_lit;
-          "minor_collections" , int 0;
-          "major_collections" , int 0;
-          "heap_words", int 0;
-          "heap_chunks", int 0;
-          "live_words", int 0;
-          "live_blocks", int 0 ;
-          "free_words", int 0; 
-          "free_blocks", int 0;
-          "largest_free", int 0;
-          "fragments", int 0;
-          "compactions", int 0;
-          "top_heap_words", int 0;
-          "stack_size" , int 0;
+          "minor_collections" , zero_int_literal;
+          "major_collections" , zero_int_literal;
+          "heap_words", zero_int_literal;
+          "heap_chunks",zero_int_literal;
+          "live_words", zero_int_literal;
+          "live_blocks", zero_int_literal ;
+          "free_words", zero_int_literal; 
+          "free_blocks", zero_int_literal;
+          "largest_free", zero_int_literal;
+          "fragments", zero_int_literal;
+          "compactions", zero_int_literal;
+          "top_heap_words", zero_int_literal;
+          "stack_size" , zero_int_literal;
         ]
 
 
@@ -171,55 +171,69 @@ let query (prim : Lam_compile_env.primitive_description)
         | _ -> assert false
       end
 
-    | "caml_int32_add"|"caml_nativeint_add" -> 
+    | "caml_int32_add"
+    | "caml_nativeint_add" 
+      -> 
       begin match args with 
         | [e0;e1] -> E.int32_add e0 e1 
         | _ -> assert false 
       end
-    | "caml_int32_div"| "caml_nativeint_div" -> 
+    | "caml_int32_div"
+    | "caml_nativeint_div" -> 
       begin match args with 
         | [e0;e1] -> E.int32_div e0 e1
         | _ -> assert false 
       end
-    | "caml_int32_mul" | "caml_nativeint_mul"  -> 
+    | "caml_int32_mul"
+    | "caml_nativeint_mul"  -> 
       begin match args with 
         | [e0;e1] -> E.int32_mul e0 e1 
         | _ -> assert false 
       end
-    | "caml_int32_of_int" | "caml_nativeint_of_int" 
+    | "caml_int32_of_int"
+    | "caml_nativeint_of_int" 
     | "caml_nativeint_of_int32" -> 
       begin match args with 
         | [e] -> e 
         | _ -> assert false 
       end
-    |  "caml_int32_of_float" | "caml_int_of_float"|"caml_nativeint_of_float" -> 
+    | "caml_int32_of_float"
+    | "caml_int_of_float"
+    |"caml_nativeint_of_float" -> 
       begin match args with 
         | [e] -> E.to_int32 e 
         | _ -> assert false 
       end
-    | "caml_int32_to_float" | "caml_int32_to_int" | "caml_nativeint_to_int" 
-    |  "caml_nativeint_to_float"| "caml_nativeint_to_int32" -> 
+    | "caml_int32_to_float"
+    | "caml_int32_to_int"
+    | "caml_nativeint_to_int" 
+    | "caml_nativeint_to_float"
+    | "caml_nativeint_to_int32" -> 
       begin match args with 
         | [e] -> e 
         | _ -> assert false 
       end
-    | "caml_int32_sub"|"caml_nativeint_sub" ->
+    | "caml_int32_sub"
+    | "caml_nativeint_sub" ->
       begin match args with 
         | [e0;e1] -> E.int32_minus e0 e1 
         | _ -> assert false 
       end
-    | "caml_int32_xor" | "caml_nativeint_xor" -> 
+    | "caml_int32_xor" 
+    | "caml_nativeint_xor" -> 
       begin match args with 
         | [e0; e1] -> E.int32_bxor e0 e1 
         | _ -> assert false 
       end
 
-    | "caml_int32_and" | "caml_nativeint_and" -> 
+    | "caml_int32_and"
+    | "caml_nativeint_and" -> 
       begin match args with 
         | [e0;e1] -> E.int32_band e0 e1 
         | _ -> assert false 
       end
-    | "caml_int32_or" | "caml_nativeint_or" ->
+    | "caml_int32_or"
+    | "caml_nativeint_or" ->
       begin match args with
         | [e0;e1] -> E.int32_bor e0 e1 
         | _ -> assert false  
@@ -238,7 +252,7 @@ let query (prim : Lam_compile_env.primitive_description)
       begin match args with 
         | [e] -> 
           (** TODO: use float.. *)
-          E.int32_minus (E.int 0) e 
+          E.int32_minus E.zero_int_literal e 
         | _ -> assert false
       end
     | "caml_neq_float" -> 
@@ -325,7 +339,7 @@ let query (prim : Lam_compile_env.primitive_description)
       *)
       begin match args with
         | [{expression_desc = Number (Int {i; _}); _} as v] 
-          when i >= 0 -> 
+          when i >= 0l -> 
           E.uninitialized_array v 
         (* TODO: inline and spits out a warning when i is negative *)
         | _ -> 
@@ -367,7 +381,7 @@ let query (prim : Lam_compile_env.primitive_description)
          [caml_named_value] is a c primitive but not OCaml/runtimedef.ml, so we don't needs
          handle it 
       *)
-      E.unit ()
+      E.unit
     | "caml_gc_compaction" 
     | "caml_gc_full_major" 
     | "caml_gc_major" 
@@ -384,7 +398,7 @@ let query (prim : Lam_compile_env.primitive_description)
     | "caml_record_backtrace"
     | "caml_convert_raw_backtrace" 
     | "caml_get_current_callstack"
-      -> E.unit ()
+      -> E.unit
     (* unit -> unit 
        _ -> unit  
        major_slice : int -> int 
@@ -397,13 +411,13 @@ let query (prim : Lam_compile_env.primitive_description)
       (* unit -> Gc.control*)
       Js_of_lam_record.make NA 
         E.[
-         "minor_heap_size",   int 0 ;
-         "major_heap_increment",  int 0 ;
-         "space_overhead",  int 0; 
-         "verbose", int 0; (* TODO*)
-         "max_overhead",  int 0;
-         "stack_limit", int 0;
-         "allocation_policy", int 0
+         "minor_heap_size",   zero_int_literal ;
+         "major_heap_increment",  zero_int_literal ;
+         "space_overhead",  zero_int_literal; 
+         "verbose", zero_int_literal; (* TODO*)
+         "max_overhead",  zero_int_literal;
+         "stack_limit", zero_int_literal;
+         "allocation_policy", zero_int_literal
         ]
     | "caml_set_oo_id" 
       ->
@@ -419,7 +433,7 @@ let query (prim : Lam_compile_env.primitive_description)
 
           -> 
           Js_of_lam_exception.make_exception    
-            (E.prefix_inc
+            (E.unchecked_prefix_inc
                (E.runtime_var_vid
                   Js_config.builtin_exceptions
                   "caml_oo_last_id")) 
@@ -434,7 +448,7 @@ let query (prim : Lam_compile_env.primitive_description)
       (** return false *)
       E.bool Sys.big_endian
     | "caml_sys_const_word_size" -> 
-      E.int Sys.word_size
+      E.small_int  Sys.word_size
     (** TODO: How it will affect program behavior *)
     | "caml_sys_const_ostype_cygwin" -> E.false_ 
     | "caml_sys_const_ostype_win32" -> E.false_ 
@@ -442,7 +456,7 @@ let query (prim : Lam_compile_env.primitive_description)
     | "caml_is_js" -> E.true_
     | "caml_sys_get_config" ->
       (** No cross compilation *)
-      Js_of_lam_tuple.make [E.str Sys.os_type; E.int Sys.word_size; 
+      Js_of_lam_tuple.make [E.str Sys.os_type; E.small_int  Sys.word_size; 
                             E.bool Sys.big_endian ]
     | "caml_sys_get_argv" -> 
       (** TODO: refine
@@ -507,7 +521,9 @@ let query (prim : Lam_compile_env.primitive_description)
       begin match args with 
         | [ tag; 
             {expression_desc = Number (Int { i ;_}); _} ] ->
-          E.make_block tag NA (Ext_list.init i (fun _ -> E.int 0)  ) NA
+          E.make_block tag NA 
+            (Ext_list.init (Int32.to_int i) 
+               (fun _ -> E.zero_int_literal)) NA
 
         | [ tag; size] -> 
           E.uninitialized_object tag size
@@ -681,7 +697,7 @@ let query (prim : Lam_compile_env.primitive_description)
              1 2 3
          ]}         
       *)      
-      E.seq (E.dump Log args) (E.unit ())
+      E.seq (E.dump Log args) E.unit
 
     | "caml_anything_to_string"
     (* patched to compiler to support for convenience *)      

@@ -89,6 +89,7 @@ ticker
 test_filename
 test_alias
 mt
+mt_mock
 array_test
 test_nullary
 test_for_map2
@@ -176,3 +177,6 @@ guide_for_ext
 local_exception_test
 js_obj_test
 extensible_variant_test
+es6_module_test
+int_overflow_test
+float_test
