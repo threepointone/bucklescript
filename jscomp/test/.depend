@@ -48,6 +48,8 @@ b.cmo :
 b.cmx :
 bdd.cmo : ../stdlib/array.cmi
 bdd.cmx : ../stdlib/array.cmx
+bigarray_test.cmo : ../stdlib/int32.cmi ../stdlib/bigarray.cmi
+bigarray_test.cmx : ../stdlib/int32.cmx ../stdlib/bigarray.cmx
 boolean_test.cmo : test_bool_equal.cmo mt.cmi
 boolean_test.cmx : test_bool_equal.cmx mt.cmx
 buffer_test.cmo : ../stdlib/string.cmi mt.cmi ../stdlib/bytes.cmi \
@@ -448,6 +450,8 @@ b.cmo :
 b.cmj :
 bdd.cmo : ../stdlib/array.cmi
 bdd.cmj : ../stdlib/array.cmj
+bigarray_test.cmo : ../stdlib/int32.cmi ../stdlib/bigarray.cmi
+bigarray_test.cmj : ../stdlib/int32.cmj ../stdlib/bigarray.cmj
 boolean_test.cmo : test_bool_equal.cmo mt.cmi
 boolean_test.cmj : test_bool_equal.cmj mt.cmj
 buffer_test.cmo : ../stdlib/string.cmi mt.cmi ../stdlib/bytes.cmi \

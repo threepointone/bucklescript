@@ -180,3 +180,4 @@ extensible_variant_test
 es6_module_test
 int_overflow_test
 float_test
+bigarray_test

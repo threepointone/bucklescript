@@ -468,11 +468,21 @@ let translate
     | [e] -> E.array_copy e
     | _ -> assert false       
     end
+  | Pbigarrayref (unsafe, dimension, _kind, _layout)
+    -> 
+    E.runtime_call Js_config.bigarray 
+      ("caml_ba_get_" ^ string_of_int dimension ) args 
+  | Pbigarrayset (unsafe, dimension, _kind, _layout)
+    -> 
+    E.runtime_call Js_config.bigarray 
+      ("caml_ba_set_" ^ string_of_int dimension ) args 
+
+  | Pbigarraydim i
+    -> 
+    E.runtime_call Js_config.bigarray
+      ("caml_ba_dim_" ^ string_of_int i) args       
   | Plazyforce
   | Pbittest 
-  | Pbigarrayref (_, _, _, _)
-  | Pbigarrayset (_, _, _, _)
-  | Pbigarraydim _
   | Pstring_load_16 _
   | Pstring_load_32 _
   | Pstring_load_64 _
