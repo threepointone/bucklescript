@@ -714,13 +714,37 @@ let query (prim : Lam_compile_env.primitive_description)
   (* End of Unix support *)
   (* bigarrary support *)
   | "caml_ba_init"
+    -> 
+    begin match args with 
+      | [e] -> E.seq e E.unit 
+      | _ -> assert false
+    end
+  | "caml_ba_create"
+  | "caml_ba_get_generic"
+  | "caml_ba_set_generic"
   | "caml_ba_num_dims"
   | "caml_ba_dim"
-  | "caml_ba_map_file" (* TODO*)
-  | "caml_ba_create"
+  | "caml_ba_kind"
+  | "caml_ba_layout"
+  | "caml_ba_sub"
   | "caml_ba_slice"
+  | "caml_ba_blit"
+  | "caml_ba_fill"
   | "caml_ba_reshape"
   | "caml_ba_map_file_bytecode"
+
+    (* caml_ba_get_1,  (\* %caml_ba_ref_1 *\) *)
+    (* caml_ba_get_2, *)
+    (* caml_ba_get_3, *)
+
+    (* caml_ba_set_1,  // %caml_ba_set_1 *)
+    (* caml_ba_set_2, *)
+    (* caml_ba_set_3, *)
+
+    (* caml_ba_dim_1, // %caml_ba_dim_1 *)
+    (* caml_ba_dim_2,  *)
+    (* caml_ba_dim_3,  *)
+
     -> E.runtime_call Js_config.bigarray prim.prim_name args 
   (* End of bigarray support *)
   | "caml_convert_raw_backtrace_slot"

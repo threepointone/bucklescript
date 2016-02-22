@@ -11,8 +11,8 @@
 //       that this results in just a function pointer and will thus be fast.
 
 
-declare function caml_invalid_argument(msg:string): void;
-declare function caml_array_bound_error():void;
+
+import {caml_array_bound_error, caml_invalid_argument} from './caml_exceptions'
 
 interface BaseArray extends ArrayBufferView {
     BYTES_PER_ELEMENT: number;
@@ -25,7 +25,7 @@ interface BaseArray extends ArrayBufferView {
     subarray(begin: number, end?: number): BaseArray;
 }
 
-declare enum Data_kind {
+const enum Data_kind {
    Float32 ,
    Float64 ,
    Int8_signed,
@@ -40,11 +40,13 @@ declare enum Data_kind {
    Complex64,
    Char,
 }
-declare enum Data_layout {
+
+const enum Data_layout {
   C_layout,
   Fortan_layout
 }
-declare enum Data_type {
+
+const enum Data_type {
   General=0,  // all types which can fit in a single TypedArray
   Int64=1,    // int64, split over two TypedArrays
   Complex=2   // Complex32+64, split over two TypedArrays
@@ -95,7 +97,7 @@ function index_offset_c(n_dims : number, dims : number[], index:number[]) : numb
   };
   for (var i=0; i<n_dims; i++) {
     if (index[i] < 0 || index[i] >= dims[i]) {
-      caml_array_bound_error();
+      caml_array_bound_error(0);
     }
     ofs = ofs * dims[i] + index[i];
   }
@@ -112,7 +114,7 @@ function index_offset_fortran(n_dims : number,
   }
   for (var i = n_dims-1; i>=0; i--) {
     if (index[i] < 1 || index[i] > dims[i]) {
-      caml_array_bound_error();
+      caml_array_bound_error(0);
     }
     ofs = ofs * dims[i] + (index[i]-1);
   }
@@ -226,14 +228,14 @@ function caml_ba_create_from(
 
   function get1_c(i:number) {
     if (i<0 || i>=dim0) {
-      caml_array_bound_error()
+      caml_array_bound_error(0)
     }
     return data[i];
   }
 
   function get1_fortran(i:number) {
     if (i<1 || i>dim0) {
-      caml_array_bound_error();
+      caml_array_bound_error(0);
     }
     return data[i-1];
   }
@@ -249,11 +251,11 @@ function caml_ba_create_from(
   }
 
   function set1_c(i:number,v:number) {
-    if (i<0 || i>=dim0) caml_array_bound_error();
+    if (i<0 || i>=dim0) caml_array_bound_error(0);
     data[i] = v;
   }
   function set1_fortran(i:number,v:number) {
-    if (i<1 || i>dim0) caml_array_bound_error();
+    if (i<1 || i>dim0) caml_array_bound_error(0);
     data[i-1] = v;
   }
 
@@ -666,4 +668,38 @@ function caml_ba_slice(ba: Bigarray, vind: number[]): Bigarray {
 
 function caml_ba_reshape(ba: Bigarray, vind: number[]): Bigarray {
   return ba.reshape(vind);
+}
+
+function caml_ba_map_file_bytecode(){
+    throw Error("caml_ba_map_file_bytecode not implemented")
+}
+
+
+export {
+    // caml_ba_init, 
+    caml_ba_create,
+    caml_ba_get_generic,
+    caml_ba_set_generic,
+    caml_ba_num_dims, 
+    caml_ba_dim,
+    caml_ba_kind,
+    caml_ba_layout,
+    caml_ba_sub,
+    caml_ba_slice,
+    caml_ba_blit,
+    caml_ba_fill,
+    caml_ba_reshape,
+    // caml_ba_map_file_bytecode,
+
+    caml_ba_get_1, // %caml_ba_ref_1
+    caml_ba_get_2,
+    caml_ba_get_3,
+
+    caml_ba_set_1,  // %caml_ba_set_1
+    caml_ba_set_2,
+    caml_ba_set_3,
+
+    caml_ba_dim_1, // %caml_ba_dim_1
+    caml_ba_dim_2, 
+    caml_ba_dim_3, 
 }

@@ -5,8 +5,6 @@ var Caml_builtin_exceptions = require("../runtime/caml_builtin_exceptions");
 var Caml_bigarray           = require("../runtime/caml_bigarray");
 var Caml_array              = require("../runtime/caml_array");
 
-Caml_bigarray.caml_ba_init(/* () */0);
-
 function dims(a) {
   var n = Caml_bigarray.caml_ba_num_dims(a);
   var d = Caml_array.caml_make_vect(n, 0);
