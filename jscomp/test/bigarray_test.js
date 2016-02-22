@@ -19,22 +19,35 @@ var vv = Caml_curry.app3(Bigarray.Array1[0], /* Int32 */6, /* Fortran_layout */1
 
 function init(v) {
   for(var i = 0 ,i_finish = Caml_bigarray.caml_ba_dim_1(v) - 1; i<= i_finish; ++i){
-    var i$1 = i;
-    Caml_bigarray.caml_ba_set_1(v, i$1, i$1 * i$1);
+    v[i] = /* float array */[
+      i * i,
+      i * i * i
+    ];
   }
   return /* () */0;
 }
 
-init(v);
+function init2(v) {
+  for(var i = 0 ,i_finish = Caml_bigarray.caml_ba_dim_1(v) - 1; i<= i_finish; ++i){
+    v[i] = i;
+  }
+  return /* () */0;
+}
 
-var a = sum(v);
+function init3(v) {
+  for(var i = 0 ,i_finish = Caml_bigarray.caml_ba_dim_1(v) - 1; i<= i_finish; ++i){
+    Caml_bigarray.caml_ba_set_1(v, i, i);
+  }
+  return /* () */0;
+}
 
 var BA1 = 0;
 
-exports.BA1  = BA1;
-exports.v    = v;
-exports.sum  = sum;
-exports.vv   = vv;
-exports.init = init;
-exports.a    = a;
+exports.BA1   = BA1;
+exports.v     = v;
+exports.sum   = sum;
+exports.vv    = vv;
+exports.init  = init;
+exports.init2 = init2;
+exports.init3 = init3;
 /* v Not a pure module */
